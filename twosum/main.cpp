@@ -1,6 +1,8 @@
 #include <iostream>
 #include<vector>
 #include<map>
+#include<cstring>
+#include<string>
 using namespace std;
 struct ListNode
 {
@@ -81,9 +83,10 @@ public:
             }
             else
                 mark=0;
-            if(l1->next!=NULL){
-            res->next=new ListNode(0);
-            res=res->next;
+            if(l1->next!=NULL)
+            {
+                res->next=new ListNode(0);
+                res=res->next;
             }
             l1=l1->next;
 
@@ -98,9 +101,11 @@ public:
             }
             else
                 mark=0;
-                if(l2->next!=NULL){
+            if(l2->next!=NULL)
+            {
                 res->next=new ListNode(0);
-            res=res->next;}
+                res=res->next;
+            }
             l2=l2->next;
 
         }
@@ -111,6 +116,37 @@ public:
         }
         return ans;
     }
+    int lengthOfLongestSubstring(string s)
+    {
+
+        int mark[256];
+        memset(mark,0,sizeof(mark));
+        int len=s.length();
+        int ans=0;
+        int maxn=0;
+        for(int l=0,r=0; (l<=r)&&(r<len);)
+        {
+            int index=s[r];
+            while(mark[index]==0)
+            {
+                ans++;
+                mark[index]++;
+                r++;
+                if(ans>maxn)
+                    maxn=ans;
+                if(r>=len)
+                    break;
+                index=s[r];
+            }
+            index=s[l];
+            mark[index]--;
+            l++;
+            ans--;
+
+        }
+        return maxn;
+    }
+
 };
 void print(ListNode *l)
 {
@@ -137,16 +173,16 @@ int main()
     {
         cout<<display[i]<<" ";
     }*/
-    ListNode* start=new ListNode(3);
-    ListNode*t1=start;
-    start->next=new ListNode(7);
-    start=start->next;
+//    ListNode* start=new ListNode(3);
+//    ListNode*t1=start;
+//    start->next=new ListNode(7);
+//    start=start->next;
 //    start->next=new ListNode(9);
 
-    ListNode* start2=new ListNode(9);
-    ListNode*t2 =start2;
-   start2->next=new ListNode(2);
-    start2=start2->next;
+//    ListNode* start2=new ListNode(9);
+//    ListNode*t2 =start2;
+//   start2->next=new ListNode(2);
+//    start2=start2->next;
 //    start2->next=new ListNode(4);
 //    while(t1!=NULL)
 //    {
@@ -159,11 +195,18 @@ int main()
 //        cout<<t2->val<<" ";
 //        t2=t2->next;
 //    }
-    print(t1);
-    cout<<" \n";
-    print(t2);
-    cout<<" \n";
-    ListNode* res=  ts->addTwoNumbers(t1,t2);
-    print(res);
+//    print(t1);
+//    cout<<" \n";
+//    print(t2);
+//    cout<<" \n";
+//    ListNode* res=  ts->addTwoNumbers(t1,t2);
+//    print(res);
+    string s;
+
+    while(cin>>s)
+    {
+
+        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
+    }
     return 0;
 }
