@@ -146,7 +146,66 @@ public:
         }
         return maxn;
     }
+    string longestPalindrome(string s)
+    {
+        int len=s.length();
+        int maxn=0,l=0,r=0;
+        int temp=1;
+        for(int i=0; i<len; i++)
+        {
+          int tl=i-1,tr=i+1;
+            temp=0;
+            while(tl>=0&&tr<len)
+            {
+                if(s[tl]==s[tr])
+                {
 
+                    temp+=2;
+                    if(temp>maxn)
+                    {
+                        maxn=temp;
+                        l=tl;
+                        r=tr;
+                    }
+                    tl--;
+                    tr++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+        }
+        for(int i=0; i<len; i++)
+        {
+            int tl=i,tr=i+1;
+            temp=0;
+            while(tl>=0&&tr<len)
+            {
+                if(s[tl]==s[tr])
+                {
+
+                    temp+=2;
+                    if(temp>maxn)
+                    {
+                        maxn=temp;
+                        l=tl;
+                        r=tr;
+                    }
+                    tl--;
+                    tr++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+       // cout<<maxn<<" "<<l<<" "<<r;
+
+        return s.substr(l,r-l+1);
+    }
 };
 void print(ListNode *l)
 {
@@ -205,8 +264,8 @@ int main()
 
     while(cin>>s)
     {
-
-        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
+//        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
+        cout<<ts->longestPalindrome(s)<<"\n";
     }
     return 0;
 }
