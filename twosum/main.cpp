@@ -3,6 +3,7 @@
 #include<map>
 #include<cstring>
 #include<string>
+#include<climits>
 using namespace std;
 struct ListNode
 {
@@ -233,6 +234,20 @@ public:
 
         return strres;
     }
+    int reverse(int x) {
+       long  ans=0;
+        while(x)
+        {
+            ans*=10;
+            ans+=x%10;
+            x/=10;
+            cout<<ans<<" "<<x%10<<"\n";
+        }
+        if(ans>2147483647||ans<-2147483648)
+            return 0;
+        else
+            return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -289,10 +304,11 @@ int main()
 //    print(res);
     string s;
     int n;
-    while(cin>>s>>n)
+    while(cin>>n)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
-        cout<<"\n"<<ts->convert(s,n)<<"\n";
+//        cout<<"\n"<<ts->convert(s,n)<<"\n";
+    cout<<ts->reverse(n)<<"\n";
     }
     return 0;
 }
