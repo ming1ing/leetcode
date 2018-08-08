@@ -206,6 +206,33 @@ public:
 
         return s.substr(l,r-l+1);
     }
+    string convert(string s, int numRows) {
+        if(numRows==1)
+            return s;
+        string strres;
+        int len=s.length();
+        for(int i=1;i<=numRows;i++)
+        {
+            for(int j=i-1;j<len;)
+            {
+                //cout<<s[j];
+                strres+=s[j];
+                if((i!=1)&&(i!=numRows))
+                {
+                    if(j+(numRows-i)*2<len)
+                    {
+                        //cout<<s[j+(numRows-i)*2];
+                        strres+=s[j+(numRows-i)*2];
+                    }
+                }
+
+                j+=(numRows-1)*2;
+            }
+            //cout<<"\n";
+        }
+
+        return strres;
+    }
 };
 void print(ListNode *l)
 {
@@ -261,11 +288,11 @@ int main()
 //    ListNode* res=  ts->addTwoNumbers(t1,t2);
 //    print(res);
     string s;
-
-    while(cin>>s)
+    int n;
+    while(cin>>s>>n)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
-        cout<<ts->longestPalindrome(s)<<"\n";
+        cout<<"\n"<<ts->convert(s,n)<<"\n";
     }
     return 0;
 }
