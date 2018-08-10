@@ -356,6 +356,26 @@ public:
         }
         return ans;
     }
+    bool isPalindrome(int x) {
+        if(x<0)
+            return false;
+        else
+        {
+            int temp=x;
+            int numchange=0;
+            while(x)
+            {
+                numchange*=10;
+                numchange+=x%10;
+                x/=10;
+            }
+            if(temp==numchange)
+                return true;
+            else
+                return false;
+        }
+        return true;
+    }
 };
 void print(ListNode *l)
 {
@@ -412,12 +432,12 @@ int main()
 //    print(res);
     string s;
     int n;
-    while(cin>>s)
+    while(cin>>n)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
 //    cout<<ts->reverse(n)<<"\n";
-        cout<<ts->myAtoi(s)<<"\n";
+        cout<<(bool)ts->isPalindrome(n)<<"\n";
     }
     return 0;
 }
