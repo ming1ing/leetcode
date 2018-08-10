@@ -154,7 +154,7 @@ public:
         int temp=1;
         for(int i=0; i<len; i++)
         {
-          int tl=i-1,tr=i+1;
+            int tl=i-1,tr=i+1;
             temp=0;
             while(tl>=0&&tr<len)
             {
@@ -203,18 +203,19 @@ public:
                 }
             }
         }
-       // cout<<maxn<<" "<<l<<" "<<r;
+        // cout<<maxn<<" "<<l<<" "<<r;
 
         return s.substr(l,r-l+1);
     }
-    string convert(string s, int numRows) {
+    string convert(string s, int numRows)
+    {
         if(numRows==1)
             return s;
         string strres;
         int len=s.length();
-        for(int i=1;i<=numRows;i++)
+        for(int i=1; i<=numRows; i++)
         {
-            for(int j=i-1;j<len;)
+            for(int j=i-1; j<len;)
             {
                 //cout<<s[j];
                 strres+=s[j];
@@ -234,8 +235,9 @@ public:
 
         return strres;
     }
-    int reverse(int x) {
-       long  ans=0;
+    int reverse(int x)
+    {
+        long  ans=0;
         while(x)
         {
             ans*=10;
@@ -247,6 +249,112 @@ public:
             return 0;
         else
             return ans;
+    }
+    int myAtoi(string str)
+    {
+        // cout<<str<<"\n";
+        int len=str.length();
+        int i=0;
+        while(str[i]==' ')
+        {
+            i++;
+            if(i>=len)
+                return 0;
+        }
+        if((str[i]>'9')&&(str[i]<'0')&&(str[i]!='-'))
+            return 0;
+        int mark=0;
+        long long ans=0;
+        for(; i<len; i++)
+        {
+            if(str[i]=='+'&&mark==0)
+            {
+                mark=2;continue;
+            }
+            else if(str[i]=='-'&&mark==0)
+            {
+                mark=1;continue;
+            }
+            else if(str[i]=='-'&&mark>0)
+            {
+                  if(mark==1)
+                {
+                    if(ans>2147483648)
+                        ans=-2147483648;
+                    else
+                        ans=-ans;
+                }
+                else
+                {
+                    if(ans>2147483647)
+                        ans=2147483647;
+                }
+                return ans;
+            }
+            else if(str[i]=='+'&&mark>0)
+            {
+                  if(mark==1)
+                {
+                    if(ans>2147483648)
+                        ans=-2147483648;
+                    else
+                        ans=-ans;
+                }
+                else
+                {
+                    if(ans>2147483647)
+                        ans=2147483647;
+                }
+                return ans;
+            }
+            else if(str[i]>='0'&&str[i]<='9')
+            {
+                ans*=10;
+                ans+=str[i]-'0';
+                if(mark==0)
+                    mark=2;
+                if(ans>2147483647&&(mark==2||mark==0))
+                    return 2147483647;
+                if(ans>2147483648)
+                {
+                    if(mark==1)
+                    {
+                        return -2147483648;
+                    }
+                }
+            }
+            else
+            {
+                if(mark==1)
+                {
+                    if(ans>2147483648)
+                        ans=-2147483648;
+                    else
+                        ans=-ans;
+                }
+                else
+                {
+                    if(ans>2147483647)
+                        ans=2147483647;
+                }
+
+                return ans;
+            }
+        }
+        if(mark==1)
+        {
+
+            if(ans>2147483648)
+                ans=-2147483648;
+            else
+                ans=-ans;
+        }
+        else
+        {
+            if(ans>2147483647)
+                ans=2147483647;
+        }
+        return ans;
     }
 };
 void print(ListNode *l)
@@ -304,11 +412,13 @@ int main()
 //    print(res);
     string s;
     int n;
-    while(cin>>n)
+    while(cin>>s)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
-    cout<<ts->reverse(n)<<"\n";
+//    cout<<ts->reverse(n)<<"\n";
+        cout<<ts->myAtoi(s)<<"\n";
     }
     return 0;
 }
+//9223372036854775808
