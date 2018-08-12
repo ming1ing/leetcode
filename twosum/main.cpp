@@ -376,6 +376,113 @@ public:
         }
         return true;
     }
+    bool isMatch(string s, string p){
+        int len=s.length();
+        int len2=p.length();
+        int i,j;
+        for(i=0,j=0;i<len&&j<len2;i++)
+        {
+            if(p[j]!='.'&&p[j]!='*')
+            {
+                if(p[j]!=s[i])
+                {
+                    return false;
+                }
+            }
+            else if(p[j]=='.')
+            {
+                j++;continue;
+            }
+            else if(p[j]=='*')
+            {
+                if(s[i]!=p[j-1])
+                {
+                    j++;continue;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        if(i==len&&j==len2)
+        return true;
+        else
+        {
+            return false;
+        }
+    }
+     int maxArea(vector<int>& height) {
+            int len=height.size();
+            int l=0,r=len-1;
+            int ans=0;
+            while(l<r)
+            {
+                int t=min(height[l],height[r]);
+                t*=(r-l);
+                if(t>ans)
+                    ans=t;
+                if(height[l]<height[r])
+                {
+                    l++;
+                }
+                else{
+                    r--;
+                }
+            }
+            return ans;
+    }
+    string intToRoman(int num) {
+        string s="";
+        int t=num/1000;
+        for(int i=0;i<t;i++)
+        {
+            s+="M";
+        }
+        int h=(num%1000)/100;
+        switch (h)
+            {
+               case 9: s+="CM";break;
+               case 8: s+="DCCC";break;
+               case 7: s+="DCC";break;
+               case 6: s+="DC";break;
+               case 5: s+="D";break;
+               case 4: s+="CD";break;
+               case 3: s+="CCC";break;
+               case 2: s+="CC";break;
+               case 1: s+="C";break;
+               default:break;
+            }
+            int ten=(num%100)/10;
+             switch (ten)
+            {
+               case 9: s+="XC";break;
+               case 8: s+="LXXX";break;
+               case 7: s+="LXX";break;
+               case 6: s+="LX";break;
+               case 5: s+="L";break;
+               case 4: s+="XL";break;
+               case 3: s+="XXX";break;
+               case 2: s+="XX";break;
+               case 1: s+="X";break;
+               default:break;
+            }
+            int g=(num%10);
+             switch (g)
+            {
+               case 9: s+="IX";break;
+               case 8: s+="VIII";break;
+               case 7: s+="VII";break;
+               case 6: s+="VI";break;
+               case 5: s+="V";break;
+               case 4: s+="IV";break;
+               case 3: s+="III";break;
+               case 2: s+="II";break;
+               case 1: s+="I";break;
+               default:break;
+            }
+        return s;
+    }
 };
 void print(ListNode *l)
 {
@@ -430,14 +537,29 @@ int main()
 //    cout<<" \n";
 //    ListNode* res=  ts->addTwoNumbers(t1,t2);
 //    print(res);
-    string s;
+//    vector<int> h;
+//    h.clear();
+//    h.push_back(1);
+//    h.push_back(8);
+//    h.push_back(6);
+//    h.push_back(2);
+//    h.push_back(5);
+//    h.push_back(4);
+//    h.push_back(8);
+//    h.push_back(3);
+//    h.push_back(7);
+//    cout<<ts->maxArea(h)<<"\n";
+
+    string s,p;
     int n;
     while(cin>>n)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
 //    cout<<ts->reverse(n)<<"\n";
-        cout<<(bool)ts->isPalindrome(n)<<"\n";
+//        cout<<(bool)ts->isMatch(s,p)<<"\n";
+cout<<ts->intToRoman(n)<<"\n";
+
     }
     return 0;
 }
