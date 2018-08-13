@@ -483,6 +483,91 @@ public:
             }
         return s;
     }
+    int romanToInt(string s) {
+        int mark[20];
+        for(int i=0;i<20;i++)
+        {
+            mark[i]=0;
+        }
+        int ans=0;
+        int len=s.length();
+        for(int i=0;i<len;i++)
+        {
+            if(s[i]=='I'&&s[i+1]=='V')
+            {
+                ans+=4;mark[i]=1;mark[i+1]=1;
+            }
+            else if(s[i]=='I'&&s[i+1]=='X')
+            {
+                ans+=9;mark[i]=1;mark[i+1]=1;
+            }
+             else if(s[i]=='X'&&s[i+1]=='L')
+            {
+                ans+=40;mark[i]=1;mark[i+1]=1;
+            }
+             else if(s[i]=='X'&&s[i+1]=='C')
+            {
+                ans+=90;mark[i]=1;mark[i+1]=1;
+            }
+             else if(s[i]=='C'&&s[i+1]=='D')
+            {
+                ans+=400;mark[i]=1;mark[i+1]=1;
+            }
+             else if(s[i]=='C'&&s[i+1]=='M')
+            {
+                ans+=900;mark[i]=1;mark[i+1]=1;
+            }
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(mark[i]>0)
+            {
+                continue;
+            }
+            switch(s[i])
+            {
+                case 'I':ans+=1;break;
+                case 'V':ans+=5;break;
+                case 'X':ans+=10;break;
+                case 'L':ans+=50;break;
+                case 'C':ans+=100;break;
+                case 'D':ans+=500;break;
+                case 'M':ans+=1000;break;
+            }
+        }
+        return ans;
+    }
+    string longestCommonPrefix(vector<string>& strs) {
+        int n=strs.size();
+        if(n==0)
+            return "";
+        int shortlen=1000000000;
+        for(int i=0;i<n;i++)
+        {
+            if(strs[i].length()<shortlen)
+                shortlen=strs[i].length();
+        }
+        string strans="";
+        for(int i=0;i<strs[i].length();i++)
+        {
+            char s=strs[0][i];
+            int mark=0;
+            for(int j=1;j<n;j++)
+            {
+                if(strs[j][i]!=s)
+                {
+                    mark=1;
+                    break;
+                }
+            }
+            if(mark==1)
+            {
+                break;
+            }
+            strans+=s;
+        }
+        return strans;
+    }
 };
 void print(ListNode *l)
 {
@@ -549,17 +634,27 @@ int main()
 //    h.push_back(3);
 //    h.push_back(7);
 //    cout<<ts->maxArea(h)<<"\n";
-
+vector<string > test;
+test.clear();
+test.push_back("flower");
+test.push_back("flow");
+test.push_back("flight");
+cout<<ts->longestCommonPrefix(test)<<"\n";
+test.clear();
+test.push_back("dog");
+test.push_back("racecar");
+test.push_back("car");
+cout<<ts->longestCommonPrefix(test)<<"\n";
     string s,p;
     int n;
-    while(cin>>n)
+    while(cin>>s)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
 //    cout<<ts->reverse(n)<<"\n";
 //        cout<<(bool)ts->isMatch(s,p)<<"\n";
-cout<<ts->intToRoman(n)<<"\n";
-
+//cout<<ts->intToRoman(n)<<"\n";
+ cout<<ts->romanToInt(s)<<"\n";
     }
     return 0;
 }
