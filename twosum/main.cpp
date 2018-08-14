@@ -4,6 +4,7 @@
 #include<cstring>
 #include<string>
 #include<climits>
+#include<stack>
 using namespace std;
 struct ListNode
 {
@@ -568,6 +569,127 @@ public:
         }
         return strans;
     }
+    vector<vector<int> > threeSum(vector<int>& nums) {
+        map<int,int> mark;
+        mark.clear();
+        for(int i=0;i<nums.size();i++)
+        {
+            mark[nums[i]]++;
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            for(int j=0;j<0;j++)
+            {
+                ;
+            }
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        string s[10];
+        s[0]="";
+        s[1]="";
+        s[2]="abc";
+        s[3]="def";
+        s[4]="ghi";
+        s[5]="jkl";
+        s[6]="mno";
+        s[7]="pqrs";
+        s[8]="tuv";
+        s[9]="wxyz";
+        vector<string> ans;
+        ans.clear();
+        int len=digits.length();
+        for(int i=0;i<len;i++)
+        {
+            string t="";
+            for(int j=0;j<s[i].length();j++)
+            {
+                int num=digits[i]-'0';
+                t+=s[num][j];
+            }
+        }
+    }
+    bool isValid(string s) {
+        if(s.length()%2==1)
+            return false;
+        stack<char> ans;
+        while(!ans.empty())
+        {
+            ans.pop();
+        }
+        int len=s.length();
+        for(int i=0;i<len;i++)
+        {
+            if(s[i]=='('||s[i]=='['||s[i]=='{')
+                {
+                    ans.push(s[i]);
+                }
+            else
+            {
+                if(s[i]==')')
+                {
+                    if(ans.empty())
+                    {
+                        return false;
+                    }
+                    if(ans.top()=='(')
+                    {
+                        ans.pop();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else if(s[i]==']')
+                {
+                    if(ans.empty())
+                    {
+                        return false;
+                    }
+                    if(ans.top()=='[')
+                    {
+                        ans.pop();
+                    }
+                    else
+                        return false;
+                }
+                else if(s[i]=='}')
+                {
+                    if(ans.empty())
+                    {
+                        return false;
+                    }
+                    if(ans.top()=='{')
+                    {
+                        ans.pop();
+                    }
+                    else
+                        return false;
+                }
+            }
+        }
+        if(ans.empty())
+            return true;
+        else
+            return false;
+    }
+     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+         if(l1==NULL)
+            return l2;
+         if(l2==NULL)
+            return l1;
+            if(l1->val<l2->val)
+            {
+                l1->next=mergeTwoLists(l1->next,l2);
+                return l1;
+            }
+            else
+            {
+                l2->next=mergeTwoLists(l1,l2->next);
+                return l2;
+            }
+    }
 };
 void print(ListNode *l)
 {
@@ -634,17 +756,35 @@ int main()
 //    h.push_back(3);
 //    h.push_back(7);
 //    cout<<ts->maxArea(h)<<"\n";
-vector<string > test;
-test.clear();
-test.push_back("flower");
-test.push_back("flow");
-test.push_back("flight");
-cout<<ts->longestCommonPrefix(test)<<"\n";
-test.clear();
-test.push_back("dog");
-test.push_back("racecar");
-test.push_back("car");
-cout<<ts->longestCommonPrefix(test)<<"\n";
+//vector<string > test;
+//test.clear();
+//test.push_back("flower");
+//test.push_back("flow");
+//test.push_back("flight");
+//cout<<ts->longestCommonPrefix(test)<<"\n";
+//test.clear();
+//test.push_back("dog");
+//test.push_back("racecar");
+//test.push_back("car");
+//cout<<ts->longestCommonPrefix(test)<<"\n";
+ListNode *start=new ListNode(1);
+ListNode *s1=start;
+ for(int i=1;i<10;i++)
+ {
+     start->next=new ListNode(i+1);
+     start=start->next;
+ }
+ print(s1);
+ ListNode *start2=new ListNode(2);
+ListNode *s2=start2;
+ for(int i=2;i<=5;i++)
+ {
+     start2->next=new ListNode(i*2);
+     start2=start2->next;
+ }
+ print(s2);
+ ListNode *ansp=ts->mergeTwoLists(s1,s2);
+ print(ansp);
     string s,p;
     int n;
     while(cin>>s)
@@ -654,7 +794,8 @@ cout<<ts->longestCommonPrefix(test)<<"\n";
 //    cout<<ts->reverse(n)<<"\n";
 //        cout<<(bool)ts->isMatch(s,p)<<"\n";
 //cout<<ts->intToRoman(n)<<"\n";
- cout<<ts->romanToInt(s)<<"\n";
+// cout<<ts->romanToInt(s)<<"\n";
+cout<<ts->isValid(s)<<"\n";
     }
     return 0;
 }

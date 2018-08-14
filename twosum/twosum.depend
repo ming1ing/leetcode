@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1534090009 source:d:\leetcode\twosum\main.cpp
+1534258305 source:d:\leetcode\twosum\main.cpp
 	<iostream>
 	<vector>
 	<map>
 	<cstring>
 	<string>
 	<climits>
+	<stack>
 
