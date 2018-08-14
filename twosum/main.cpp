@@ -690,6 +690,43 @@ public:
                 return l2;
             }
     }
+    int removeDuplicates(vector<int>& nums) {
+
+        int len=nums.size();
+        if(len==1)
+            return 1;
+        int anslen=0;
+        for(int i=0;i<len;i++)
+        {
+
+            for(int j=i+1;j<len;j++)
+            {
+                int t=nums[i],t2=nums[j];
+
+                if(nums[i]==nums[j])
+                {
+                    if(j==len-1){
+                        nums[anslen++]=nums[i];
+                        i=j;
+                        break;
+                    }
+                    continue;
+                }
+                else
+                {
+                    nums[anslen++]=nums[i];
+                    i=j-1;
+                    if(j==len-1)
+                    {
+                       nums[anslen++]=nums[j];
+                    }
+                    break;
+                }
+            }
+        }
+
+        return anslen;
+    }
 };
 void print(ListNode *l)
 {
@@ -767,24 +804,36 @@ int main()
 //test.push_back("racecar");
 //test.push_back("car");
 //cout<<ts->longestCommonPrefix(test)<<"\n";
-ListNode *start=new ListNode(1);
-ListNode *s1=start;
- for(int i=1;i<10;i++)
- {
-     start->next=new ListNode(i+1);
-     start=start->next;
- }
- print(s1);
- ListNode *start2=new ListNode(2);
-ListNode *s2=start2;
- for(int i=2;i<=5;i++)
- {
-     start2->next=new ListNode(i*2);
-     start2=start2->next;
- }
- print(s2);
- ListNode *ansp=ts->mergeTwoLists(s1,s2);
- print(ansp);
+//ListNode *start=new ListNode(1);
+//ListNode *s1=start;
+// for(int i=1;i<10;i++)
+// {
+//     start->next=new ListNode(i+1);
+//     start=start->next;
+// }
+// print(s1);
+// ListNode *start2=new ListNode(2);
+//ListNode *s2=start2;
+// for(int i=2;i<=5;i++)
+// {
+//     start2->next=new ListNode(i*2);
+//     start2=start2->next;
+// }
+// print(s2);
+// ListNode *ansp=ts->mergeTwoLists(s1,s2);
+// print(ansp);
+vector<int> test;
+test.clear();
+for(int i=0;i<4;i++)
+{
+    test.push_back(1);
+}
+for(int i=0;i<4;i++)
+    cout<<test[i]<<" ";
+    int len=ts->removeDuplicates(test);
+cout<<len<<"\n";
+for(int i=0;i<len;i++)
+    cout<<test[i]<<" ";
     string s,p;
     int n;
     while(cin>>s)
