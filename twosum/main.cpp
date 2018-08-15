@@ -727,6 +727,27 @@ public:
 
         return anslen;
     }
+    ListNode* removeNthFromEnd(ListNode* head, int n){
+        ListNode *start=new ListNode(0);
+        start->next=head;
+        ListNode *pfront=start;
+        ListNode *tfront=start;
+        ListNode *p=start;
+        for(int i=0;i<n-1;i++)
+        {
+            pfront=pfront->next;
+        }
+        while(pfront->next!=NULL)
+        {
+            pfront=pfront->next;
+            tfront=tfront->next;
+            if(pfront->next==NULL)
+                p->next=tfront->next;
+            else
+                p=p->next;
+        }
+        return start->next;
+    }
 };
 void print(ListNode *l)
 {
@@ -822,18 +843,28 @@ int main()
 // print(s2);
 // ListNode *ansp=ts->mergeTwoLists(s1,s2);
 // print(ansp);
-vector<int> test;
-test.clear();
-for(int i=0;i<4;i++)
+//vector<int> test;
+//test.clear();
+//for(int i=0;i<4;i++)
+//{
+//    test.push_back(1);
+//}
+//for(int i=0;i<4;i++)
+//    cout<<test[i]<<" ";
+//    int len=ts->removeDuplicates(test);
+//cout<<len<<"\n";
+//for(int i=0;i<len;i++)
+//    cout<<test[i]<<" ";
+ListNode* start=new ListNode(1);
+ListNode *ps=start;
+for(int i=2;i<=3;i++)
 {
-    test.push_back(1);
+    start->next=new ListNode(i);
+    start=start->next;
 }
-for(int i=0;i<4;i++)
-    cout<<test[i]<<" ";
-    int len=ts->removeDuplicates(test);
-cout<<len<<"\n";
-for(int i=0;i<len;i++)
-    cout<<test[i]<<" ";
+print(ps);
+ListNode *ans=ts->removeNthFromEnd(ps,2);
+print(ans);
     string s,p;
     int n;
     while(cin>>s)
