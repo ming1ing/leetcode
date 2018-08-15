@@ -748,6 +748,20 @@ public:
         }
         return start->next;
     }
+    int removeElement(vector<int>& nums, int val) {
+            int len=nums.size();
+            int anslen=0;
+            for(int i=0;i<len;i++)
+            {
+                if(nums[i]==val)
+                    continue;
+                else
+                {
+                    nums[anslen++]=nums[i];
+                }
+            }
+            return anslen;
+    }
 };
 void print(ListNode *l)
 {
@@ -855,16 +869,23 @@ int main()
 //cout<<len<<"\n";
 //for(int i=0;i<len;i++)
 //    cout<<test[i]<<" ";
-ListNode* start=new ListNode(1);
-ListNode *ps=start;
-for(int i=2;i<=3;i++)
-{
-    start->next=new ListNode(i);
-    start=start->next;
-}
-print(ps);
-ListNode *ans=ts->removeNthFromEnd(ps,2);
-print(ans);
+//ListNode* start=new ListNode(1);
+//ListNode *ps=start;
+//for(int i=2;i<=3;i++)
+//{
+//    start->next=new ListNode(i);
+//    start=start->next;
+//}
+//print(ps);
+//ListNode *ans=ts->removeNthFromEnd(ps,2);
+//print(ans);
+vector<int> test;
+test.clear();
+test.push_back(3);
+test.push_back(2);
+test.push_back(3);
+test.push_back(3);
+cout<<ts->removeElement(test,3)<<"\n";
     string s,p;
     int n;
     while(cin>>s)
