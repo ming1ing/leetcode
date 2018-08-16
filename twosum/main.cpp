@@ -762,6 +762,46 @@ public:
             }
             return anslen;
     }
+    string countAndSay(int n){
+        vector<string> ans(n+2);
+        string sss="1";
+        ans[0]=sss;
+        ans[1]=sss;
+        for(int i=2;i<=n;i++)
+        {
+            int len=ans[i-1].size();
+            for(int j=0;j<len;j++)
+            {
+                char t=ans[i-1][j];
+                int num=0;
+                for(int k=j;k<len;k++)
+                {
+                    if(ans[i-1][k]==ans[i-1][j])
+                    {
+                        num++;
+                        if(k==(len-1))
+                        {
+                            ans[i].push_back((num+'0'));
+                            ans[i].push_back(ans[i-1][j]);
+                           // cout<<ans[i]<<"\n";
+                            num=0;
+                            j=k;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ans[i].push_back((num+'0'));
+                        ans[i].push_back(ans[i-1][j]);
+                        num=0;
+                        j=k-1;
+                        break;
+                    }
+                }
+            }
+        }
+        return ans[n];
+    }
 };
 void print(ListNode *l)
 {
@@ -879,16 +919,16 @@ int main()
 //print(ps);
 //ListNode *ans=ts->removeNthFromEnd(ps,2);
 //print(ans);
-vector<int> test;
-test.clear();
-test.push_back(3);
-test.push_back(2);
-test.push_back(3);
-test.push_back(3);
-cout<<ts->removeElement(test,3)<<"\n";
+//vector<int> test;
+//test.clear();
+//test.push_back(3);
+//test.push_back(2);
+//test.push_back(3);
+//test.push_back(3);
+//cout<<ts->removeElement(test,3)<<"\n";
     string s,p;
     int n;
-    while(cin>>s)
+    while(cin>>n)
     {
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
@@ -896,7 +936,8 @@ cout<<ts->removeElement(test,3)<<"\n";
 //        cout<<(bool)ts->isMatch(s,p)<<"\n";
 //cout<<ts->intToRoman(n)<<"\n";
 // cout<<ts->romanToInt(s)<<"\n";
-cout<<ts->isValid(s)<<"\n";
+//cout<<ts->isValid(s)<<"\n";
+cout<<ts->countAndSay(n)<<"\n";
     }
     return 0;
 }
