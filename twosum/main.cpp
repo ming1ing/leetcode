@@ -5,6 +5,7 @@
 #include<string>
 #include<climits>
 #include<stack>
+#include<algorithm>
 using namespace std;
 struct ListNode
 {
@@ -824,6 +825,55 @@ public:
         }
         return l;
     }
+    double myPow(double x, int n) {
+        int mark=0;
+        if(n<0)
+        {
+            mark=1;
+            n=-n;
+        }
+        double ans=1.0,a=x;
+        while(n)
+        {
+            if(n&1)
+            {
+                ans*=a;
+            }
+            a*=a;
+            n/=2;
+        }
+        if(mark==1)
+            ans=1.0/ans;
+        return ans;
+    }
+    vector<vector<string> > groupAnagrams(vector<string>& strs) {
+        map<string,int> p;
+        vector<vector<string> > ans;
+        p.clear();
+        ans.clear();
+        int len=strs.size();
+        for(int i=0;i<len;i++)
+        {
+            string t=strs[i];
+            sort(t.begin(), t.end());
+            if(p.find(t)==p.end())
+            {
+                int l=ans.size();
+                ans.resize(l+1);
+                ans[l].push_back(strs[i]);
+
+                p.insert(map<string,int>::value_type(t,ans.size()-1));
+            }
+            else
+            {
+                int num=p[t];
+                ans[num].push_back(strs[i]);
+
+            }
+        }
+
+        return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -948,13 +998,21 @@ int main()
 //test.push_back(3);
 //test.push_back(3);
 //cout<<ts->removeElement(test,3)<<"\n";
-vector<int> test;
-test.clear();
-test.push_back(1);
-test.push_back(3);
-test.push_back(5);
-test.push_back(6);
-
+//vector<int> test;
+//test.clear();
+//test.push_back(1);
+//test.push_back(3);
+//test.push_back(5);
+//test.push_back(6);
+vector<string > strs;
+strs.clear();
+strs.push_back("eat");
+strs.push_back("tea");
+strs.push_back("tan");
+strs.push_back("ate");
+strs.push_back("nat");
+strs.push_back("bat");
+ts->groupAnagrams(strs);
     string s,p;
     int n;
     while(cin>>n)
@@ -967,7 +1025,10 @@ test.push_back(6);
 // cout<<ts->romanToInt(s)<<"\n";
 //cout<<ts->isValid(s)<<"\n";
 //cout<<ts->countAndSay(n)<<"\n";
-cout<<ts->searchInsert(test,n)<<"\n";
+//cout<<ts->searchInsert(test,n)<<"\n";
+//cout<<ts->myPow(2.00,10)<<"\n";
+//cout<<ts->myPow(2.10,3)<<"\n";
+//cout<<ts->myPow(2.00,-2)<<"\n";
     }
     return 0;
 }
