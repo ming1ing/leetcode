@@ -874,6 +874,18 @@ public:
 
         return ans;
     }
+    void rotate(vector<vector<int> >& matrix) {
+        int n=matrix.size();
+        for(int i=0;i<n/2;i++)
+        {
+            for(int j=0;j<(n+1)/2;j++)
+            {
+                swap(matrix[i][j],matrix[j][n-1-i]);
+                swap(matrix[i][j],matrix[n-1-i][n-1-j]);
+                swap(matrix[i][j],matrix[n-1-j][i]);
+            }
+        }
+    }
 };
 void print(ListNode *l)
 {
@@ -1004,19 +1016,27 @@ int main()
 //test.push_back(3);
 //test.push_back(5);
 //test.push_back(6);
-vector<string > strs;
-strs.clear();
-strs.push_back("eat");
-strs.push_back("tea");
-strs.push_back("tan");
-strs.push_back("ate");
-strs.push_back("nat");
-strs.push_back("bat");
-ts->groupAnagrams(strs);
+//vector<string > strs;
+//strs.clear();
+//strs.push_back("eat");
+//strs.push_back("tea");
+//strs.push_back("tan");
+//strs.push_back("ate");
+//strs.push_back("nat");
+//strs.push_back("bat");
+//ts->groupAnagrams(strs);
+  vector< vector<int > > test;
+
     string s,p;
     int n;
     while(cin>>n)
     {
+        test.resize(n);
+        for(int i=0;i<n*n;i++)
+        {
+            test[i/n].push_back(i+1);
+        }
+        ts->rotate(test);
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
 //    cout<<ts->reverse(n)<<"\n";
