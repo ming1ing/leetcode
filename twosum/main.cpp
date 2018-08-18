@@ -886,6 +886,38 @@ public:
             }
         }
     }
+    int trap(vector<int>& height) {
+        vector<int> left;
+        left.clear();
+        vector<int> right;
+        right.clear();
+        int len=height.size();
+        if(len==0)
+            return 0;
+        left.push_back(height[0]);
+        int lmaxn=height[0];
+        for(int i=1;i<len;i++)
+        {
+            if(height[i]>lmaxn)
+                lmaxn=height[i];
+            left.push_back(lmaxn);
+        }
+        right.push_back(height[len-1]);
+        int rmaxn=height[len-1];
+        for(int i=len-2;i>=0;i--)
+        {
+            if(height[i]>rmaxn)
+                rmaxn=height[i];
+            right.push_back(rmaxn);
+        }
+
+        int nans=0;
+        for(int i=0;i<len;i++)
+        {
+            nans+=min(left[i],right[len-1-i])-height[i];
+        }
+        return nans;
+    }
 };
 void print(ListNode *l)
 {
@@ -1025,18 +1057,32 @@ int main()
 //strs.push_back("nat");
 //strs.push_back("bat");
 //ts->groupAnagrams(strs);
-  vector< vector<int > > test;
-
+//  vector< vector<int > > test;
+vector<int> test;
+test.clear();
+test.push_back(0);
+test.push_back(1);
+test.push_back(0);
+test.push_back(2);
+test.push_back(1);
+test.push_back(0);
+test.push_back(1);
+test.push_back(3);
+test.push_back(2);
+test.push_back(1);
+test.push_back(2);
+test.push_back(1);
+cout<<ts->trap(test)<<"\n";
     string s,p;
     int n;
     while(cin>>n)
     {
-        test.resize(n);
-        for(int i=0;i<n*n;i++)
-        {
-            test[i/n].push_back(i+1);
-        }
-        ts->rotate(test);
+//        test.resize(n);
+//        for(int i=0;i<n*n;i++)
+//        {
+//            test[i/n].push_back(i+1);
+//        }
+//        ts->rotate(test);
 //        cout<<ts->lengthOfLongestSubstring(s)<<"\n";
 //        cout<<"\n"<<ts->convert(s,n)<<"\n";
 //    cout<<ts->reverse(n)<<"\n";
