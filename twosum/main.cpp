@@ -918,6 +918,41 @@ public:
         }
         return nans;
     }
+     ListNode* swapPairs(ListNode* head) {
+         if(head==NULL)
+            return head;
+        ListNode *l1=head;
+        ListNode *ans=NULL;
+        if(l1->next==NULL)
+            ans=head;
+        else
+            ans=head->next;
+        while(l1!=NULL)
+        {
+            ListNode *l2=l1->next;
+            if(l2==NULL)
+                break;
+            ListNode *l3=l2->next;
+            l2->next=l1;
+            if(l3==NULL||l3->next==NULL)
+            {
+                l1->next=l3;
+                break;
+            }
+            /*if(l3->next==NULL)
+            {
+                l1->next=l3;
+                break;
+            }*/
+            if(l3->next!=NULL)
+            {
+                l1->next=l3->next;
+                l1=l3;
+            }
+
+        }
+        return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -930,6 +965,9 @@ void print(ListNode *l)
 int main()
 {
     Solution* ts=new Solution();
+    {
+
+
     /*vector<int> testa;
     vector<int> display;
     testa.push_back(2);
@@ -1058,25 +1096,38 @@ int main()
 //strs.push_back("bat");
 //ts->groupAnagrams(strs);
 //  vector< vector<int > > test;
-vector<int> test;
-test.clear();
-test.push_back(0);
-test.push_back(1);
-test.push_back(0);
-test.push_back(2);
-test.push_back(1);
-test.push_back(0);
-test.push_back(1);
-test.push_back(3);
-test.push_back(2);
-test.push_back(1);
-test.push_back(2);
-test.push_back(1);
-cout<<ts->trap(test)<<"\n";
+//vector<int> test;
+//test.clear();
+//test.push_back(0);
+//test.push_back(1);
+//test.push_back(0);
+//test.push_back(2);
+//test.push_back(1);
+//test.push_back(0);
+//test.push_back(1);
+//test.push_back(3);
+//test.push_back(2);
+//test.push_back(1);
+//test.push_back(2);
+//test.push_back(1);
+//cout<<ts->trap(test)<<"\n";
+    }
+ListNode *head=new ListNode(1);
+
     string s,p;
     int n;
     while(cin>>n)
     {
+        ListNode *t=head;
+        for(int i=2;i<=n;i++)
+        {
+            t->next=new ListNode(i);
+            t=t->next;
+        }
+        print(head);
+        cout<<"\n";
+        print(ts->swapPairs(head));
+        cout<<"\n";
 //        test.resize(n);
 //        for(int i=0;i<n*n;i++)
 //        {
