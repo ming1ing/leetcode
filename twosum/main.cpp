@@ -6,6 +6,7 @@
 #include<climits>
 #include<stack>
 #include<algorithm>
+#include<set>
 using namespace std;
 struct ListNode
 {
@@ -953,6 +954,121 @@ public:
         }
         return ans;
     }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(k==1)
+            return head;
+        ListNode *l1=head;
+        if(l1==NULL)
+            return NULL;
+        ListNode *l2=l1->next;
+        if(l2==NULL)
+            return head;
+
+        while(l2!=NULL)
+        {
+            //ListNode *l3=l2->next;
+            l1->next=l2->next;
+            l2->next=head;
+            head=l2;
+            l2=l1->next;
+        }
+        return head;
+    }
+
+
+    void dfs(vector<int>& nums,int id,vector<vector<int> >& ans,vector<int>& a,vector<int>& mark)
+    {
+        int len=nums.size();
+        if(id>=len)
+        {
+            vector<int> temp;
+            temp.clear();
+            for(int i=0;i<nums.size();i++)
+            {
+                temp.push_back(a[i]);
+            }
+            ans.push_back(temp);
+            temp.clear();
+            return ;
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(mark[nums[i]]>0)
+                continue;
+            a[id]=nums[i];
+            mark[nums[i]]++;
+            dfs(nums,id+1,ans,a,mark);
+            mark[nums[i]]=0;
+        }
+    }
+
+    vector<vector<int> > permute(vector<int>& nums) {
+        vector<int> a;
+        a.resize(20);
+        vector<int> mark;
+        mark.resize(20);
+        int len=nums.size();
+        vector<vector <int> > ans;
+        ans.clear();
+
+       for(int i=0;i<20;i++)
+        mark[i]=0;
+        dfs(nums,0,ans,a,mark);
+
+        return ans;
+    }
+    void dfs2(vector<int>& nums,int id,set<vector<int> >& ans,vector<int>& a,vector<int>& mark)
+    {
+        int len=nums.size();
+        if(id>=len)
+        {
+            vector<int> temp;
+            temp.clear();
+            for(int i=0;i<nums.size();i++)
+            {
+                temp.push_back(a[i]);
+            }
+            ans.insert(temp);
+            temp.clear();
+            return ;
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(mark[nums[i]]>0)
+                continue;
+            a[id]=nums[i];
+            mark[nums[i]]++;
+            dfs2(nums,id+1,ans,a,mark);
+            mark[nums[i]]=0;
+        }
+    }
+    vector<vector<int> > permuteUnique(vector<int>& nums) {
+        vector<int> a;
+        a.resize(20);
+        vector<int> mark;
+        mark.resize(20);
+        int len=nums.size();
+        set<vector <int> > ans;
+        vector<vector <int> >res;
+        res.clear();
+        ans.clear();
+
+       for(int i=0;i<20;i++)
+        mark[i]=0;
+        dfs2(nums,0,ans,a,mark);
+        //cout<<ans.size()<<"\n";
+        for(set<vector<int> >::iterator it=ans.begin();it!=ans.end();it++)
+        {
+            for(int j=0;j<(*it).size();j++)
+            {
+               // cout<<(*it)[j]<<" ";
+            }
+            res.push_back((*it));
+            //cout<<"\n";
+        }
+        return res;
+    }
 };
 void print(ListNode *l)
 {
@@ -1118,7 +1234,7 @@ ListNode *head=new ListNode(1);
     int n;
     while(cin>>n)
     {
-        ListNode *t=head;
+       /* ListNode *t=head;
         for(int i=2;i<=n;i++)
         {
             t->next=new ListNode(i);
@@ -1126,8 +1242,29 @@ ListNode *head=new ListNode(1);
         }
         print(head);
         cout<<"\n";
-        print(ts->swapPairs(head));
-        cout<<"\n";
+//        print(ts->swapPairs(head));
+        print(ts->reverseKGroup(head,n));
+        cout<<"\n";*/
+        vector<int> test;
+        test.clear();
+
+        for(int i=0;i<n;i++)
+        {
+            test.push_back(i+1);
+        }
+//        test.push_back(1);
+//        test.push_back(2);
+//        test.push_back(3);
+        //vector<vector<int> >ans=ts->permute(test);
+        vector<vector<int> >ans=ts->permuteUnique(test);
+        for(int i=0;i<ans.size();i++)
+        {
+            for(int j=0;j<ans[i].size();j++)
+            {
+                cout<<ans[i][j]<<" ";
+            }
+            cout<<"\n";
+        }
 //        test.resize(n);
 //        for(int i=0;i<n*n;i++)
 //        {
