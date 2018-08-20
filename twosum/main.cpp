@@ -994,12 +994,12 @@ public:
         }
         for(int i=0;i<len;i++)
         {
-            if(mark[nums[i]]>0)
+            if(mark[i]>0)
                 continue;
             a[id]=nums[i];
-            mark[nums[i]]++;
+            mark[i]++;
             dfs(nums,id+1,ans,a,mark);
-            mark[nums[i]]=0;
+            mark[i]=0;
         }
     }
 
@@ -1035,12 +1035,12 @@ public:
         }
         for(int i=0;i<len;i++)
         {
-            if(mark[nums[i]]>0)
+            if(mark[i]>0)
                 continue;
             a[id]=nums[i];
-            mark[nums[i]]++;
+            mark[i]++;
             dfs2(nums,id+1,ans,a,mark);
-            mark[nums[i]]=0;
+            mark[i]=0;
         }
     }
     vector<vector<int> > permuteUnique(vector<int>& nums) {
@@ -1247,7 +1247,7 @@ ListNode *head=new ListNode(1);
         cout<<"\n";*/
         vector<int> test;
         test.clear();
-
+        test.push_back(1);
         for(int i=0;i<n;i++)
         {
             test.push_back(i+1);
