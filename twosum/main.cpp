@@ -1069,6 +1069,48 @@ public:
         }
         return res;
     }
+    void dfs3(vector<string>& ans,string s,int left,int right){
+            if(left==0&&right==0)
+            {
+                //cout<<"s4"<<s<<"\n";
+                ans.push_back(s);
+                return ;
+            }
+            else
+            {
+                if(left==right)
+                {
+                    s+='(';
+                    //cout<<"s1:"<<s<<"\n";
+                    dfs3(ans,s,left-1,right);
+                }
+                if(left<right)
+                {
+                    s+=')';
+                    //cout<<"s2:"<<s<<"\n";
+                    dfs3(ans,s,left,right-1);
+                    s=s.substr(0,s.length()-1);
+
+                }
+                if(left<right)
+                {
+                     if(left>0){
+                    s+='(';
+                    //cout<<"s3:"<<s<<"\n";
+                    dfs3(ans,s,left-1,right);
+                    s=s.substr(0,s.length()-1);
+                    }
+                }
+
+            }
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        ans.clear();
+        string s="";
+        dfs3(ans,s,n,n);
+        return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -1228,12 +1270,17 @@ int main()
 //test.push_back(1);
 //cout<<ts->trap(test)<<"\n";
     }
-ListNode *head=new ListNode(1);
+//ListNode *head=new ListNode(1);
 
     string s,p;
     int n;
     while(cin>>n)
     {
+        vector<string> ans=ts->generateParenthesis(n);
+        for(int i=0;i<ans.size();i++)
+        {
+            cout<<ans[i]<<"\n";
+        }
        /* ListNode *t=head;
         for(int i=2;i<=n;i++)
         {
@@ -1245,26 +1292,26 @@ ListNode *head=new ListNode(1);
 //        print(ts->swapPairs(head));
         print(ts->reverseKGroup(head,n));
         cout<<"\n";*/
-        vector<int> test;
-        test.clear();
-        test.push_back(1);
-        for(int i=0;i<n;i++)
-        {
-            test.push_back(i+1);
-        }
+//        vector<int> test;
+//        test.clear();
+//        test.push_back(1);
+//        for(int i=0;i<n;i++)
+//        {
+//            test.push_back(i+1);
+//        }
 //        test.push_back(1);
 //        test.push_back(2);
 //        test.push_back(3);
         //vector<vector<int> >ans=ts->permute(test);
-        vector<vector<int> >ans=ts->permuteUnique(test);
-        for(int i=0;i<ans.size();i++)
-        {
-            for(int j=0;j<ans[i].size();j++)
-            {
-                cout<<ans[i][j]<<" ";
-            }
-            cout<<"\n";
-        }
+//        vector<vector<int> >ans=ts->permuteUnique(test);
+//        for(int i=0;i<ans.size();i++)
+//        {
+//            for(int j=0;j<ans[i].size();j++)
+//            {
+//                cout<<ans[i][j]<<" ";
+//            }
+//            cout<<"\n";
+//        }
 //        test.resize(n);
 //        for(int i=0;i<n*n;i++)
 //        {
