@@ -1111,6 +1111,42 @@ public:
         dfs3(ans,s,n,n);
         return ans;
     }
+     int divide(int dividend, int divisor) {
+         int mark=1;
+         long long Ldividend=dividend;
+         long long Ldivisor=divisor;
+            if(dividend<0)
+            {
+                mark*=-1;
+                Ldividend=-Ldividend;
+            }
+            if(divisor<0)
+            {
+                mark*=-1;
+                Ldivisor=-Ldivisor;
+            }
+            if(Ldividend<Ldivisor)
+            {
+                return 0;
+            }
+            long long ans=0;
+            while(Ldividend>=Ldivisor)
+            {
+                long long  temp=1;
+                long long a=Ldivisor;
+                while(Ldividend>=a)
+                {
+                    temp<<=1;
+                    a<<=1;
+                }
+                Ldividend-=a>>1;
+                ans+=temp>>1;
+            }
+            ans*=mark;
+            if(ans>=2147483648)
+                ans=2147483647;
+            return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -1276,11 +1312,16 @@ int main()
     int n;
     while(cin>>n)
     {
-        vector<string> ans=ts->generateParenthesis(n);
-        for(int i=0;i<ans.size();i++)
-        {
-            cout<<ans[i]<<"\n";
-        }
+//        vector<string> ans=ts->generateParenthesis(n);
+//        for(int i=0;i<ans.size();i++)
+//        {
+//            cout<<ans[i]<<"\n";
+//        }
+cout<<ts->divide(10,3)<<"\n";
+cout<<ts->divide(7,-3)<<"\n";
+cout<<ts->divide(-2147483648,-1)<<"\n";
+cout<<ts->divide(-1010369383,-2147483648)<<"\n";
+
        /* ListNode *t=head;
         for(int i=2;i<=n;i++)
         {
