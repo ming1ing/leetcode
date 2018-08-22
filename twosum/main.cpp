@@ -1185,6 +1185,56 @@ public:
         dfs4(ans,numstochar,temp,digits,0);
         return ans;
     }
+    int longestValidParentheses(string s) {
+        int len=s.length();
+        stack<int> stack1;
+        stack<int> id;
+        vector<int> mark(len+2);
+        for(int i=0;i<len;i++)
+        {
+            if(s[i]=='(')
+            {
+                stack1.push(s[i]);
+                id.push(i);
+            }
+            else if(s[i]==')')
+            {
+                if(stack1.empty()||stack1.top()==')')
+                {
+                    stack1.push(s[i]);
+                    id.push(i);
+                }
+                else
+                {
+                    if(stack1.top()=='(')
+                    {
+                        stack1.pop();
+                        id.pop();
+                    }
+                }
+            }
+        }
+        vector<int> res;
+        int ans=0;
+        res.push_back(len);
+        while(!id.empty())
+        {
+            //cout<<"id"<<id.top()<<"\n";
+            res.push_back(id.top());
+            id.pop();
+        }
+        res.push_back(-1);
+        for(int i=0;i<res.size()-1;i++)
+            {
+                int t=res[i]-res[i+1]-1;
+                if(t>ans)
+                    ans=t;
+                cout<<res[i]<<" ";
+            }
+            cout<<"\n";
+            return ans;
+
+    }
 };
 void print(ListNode *l)
 {
@@ -1351,11 +1401,12 @@ int main()
     while(cin>>s)
     {
         //cout<<s<<"\n";
-      vector<string> ans=  ts->letterCombinations(s);
-      for(int i=0;i<ans.size();i++)
-      {
-          cout<<ans[i]<<"\n";
-      }
+        cout<<ts->longestValidParentheses(s)<<"\n";
+//      vector<string> ans=  ts->letterCombinations(s);
+//      for(int i=0;i<ans.size();i++)
+//      {
+//          cout<<ans[i]<<"\n";
+//      }
 //        vector<string> ans=ts->generateParenthesis(n);
 //        for(int i=0;i<ans.size();i++)
 //        {
