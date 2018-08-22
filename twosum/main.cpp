@@ -586,7 +586,7 @@ public:
             }
         }
     }
-    vector<string> letterCombinations(string digits) {
+    /*vector<string> letterCombinations(string digits) {
         string s[10];
         s[0]="";
         s[1]="";
@@ -610,7 +610,7 @@ public:
                 t+=s[num][j];
             }
         }
-    }
+    }*/
     bool isValid(string s) {
         if(s.length()%2==1)
             return false;
@@ -1147,6 +1147,44 @@ public:
                 ans=2147483647;
             return ans;
     }
+    void dfs4(vector<string>& ans,const vector<string>& numstochar,string temp,const string &digits,int id){
+
+        int len=digits.length();
+        if(id>=len)
+        {
+            ans.push_back(temp);
+            return ;
+        }
+        int t=digits[id]-'0';
+        for(int i=0;i<numstochar[t].size();i++)
+        {
+            temp+=numstochar[t][i];
+            dfs4(ans,numstochar,temp,digits,id+1);
+            temp.erase(temp.end()-1);
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        ans.clear();
+        if(digits.size()==0)
+            return ans;
+        vector<string> numstochar(10);
+        numstochar[0]="";
+        numstochar[1]="";
+        numstochar[2]="abc";
+        numstochar[3]="def";
+        numstochar[4]="ghi";
+        numstochar[5]="jkl";
+        numstochar[6]="mno";
+        numstochar[7]="pqrs";
+        numstochar[8]="tuv";
+        numstochar[9]="wxyz";
+
+        string temp="";
+
+        dfs4(ans,numstochar,temp,digits,0);
+        return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -1310,17 +1348,23 @@ int main()
 
     string s,p;
     int n;
-    while(cin>>n)
+    while(cin>>s)
     {
+        //cout<<s<<"\n";
+      vector<string> ans=  ts->letterCombinations(s);
+      for(int i=0;i<ans.size();i++)
+      {
+          cout<<ans[i]<<"\n";
+      }
 //        vector<string> ans=ts->generateParenthesis(n);
 //        for(int i=0;i<ans.size();i++)
 //        {
 //            cout<<ans[i]<<"\n";
 //        }
-cout<<ts->divide(10,3)<<"\n";
-cout<<ts->divide(7,-3)<<"\n";
-cout<<ts->divide(-2147483648,-1)<<"\n";
-cout<<ts->divide(-1010369383,-2147483648)<<"\n";
+//cout<<ts->divide(10,3)<<"\n";
+//cout<<ts->divide(7,-3)<<"\n";
+//cout<<ts->divide(-2147483648,-1)<<"\n";
+//cout<<ts->divide(-1010369383,-2147483648)<<"\n";
 
        /* ListNode *t=head;
         for(int i=2;i<=n;i++)
