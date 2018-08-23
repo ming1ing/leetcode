@@ -1237,6 +1237,7 @@ public:
     }
     int jump(vector<int>& nums) {
         int len=nums.size();
+
         vector<int> mark(len+2);
         mark[0]=0;
         for(int i=1;i<len;i++)
@@ -1269,6 +1270,77 @@ public:
             }
             if(mark1==1)
                 break;
+        }
+        return ans;
+    }
+
+    int search1(vector<int>& nums, int target) {
+        int len=nums.size();
+        if(len==0)
+            return -1;
+        if(target<nums[0]&&target>nums[len-1])
+        {
+            return -1;
+        }
+        int l=0,r=len-1;
+        if(target==nums[l])
+            return l;
+        if(target==nums[r])
+            return r;
+        while(l<r)
+        {
+            int mid=(l+r)/2;
+            if(nums[mid]>nums[l])
+            {
+                l=mid;
+            }
+            else
+            {
+                r=mid;
+            }
+        }
+        int ans=-1;
+        int split=l;
+        cout<<"split"<<split<<"\n";
+        if(target>nums[0])
+        {
+            l=0,r=split;
+            while(l<=r)
+            {
+                int mid=(l+r)/2;
+                if(target==nums[mid])
+                {
+                    return mid;
+                }
+                if(target>nums[mid])
+                {
+                    l=mid+1;
+                }
+                else
+                {
+                    r=mid-1;
+                }
+            }
+        }
+        else
+        {
+            l=split+1,r=len-1;
+            while(l<=r)
+            {
+                int mid=(l+r)/2;
+                if(target==nums[mid])
+                {
+                    return mid;
+                }
+                if(target>nums[mid])
+                {
+                    l=mid+1;
+                }
+                else
+                {
+                    r=mid-1;
+                }
+            }
         }
         return ans;
     }
@@ -1434,17 +1506,25 @@ int main()
 //ListNode *head=new ListNode(1);
  vector<int> test;
  test.clear();
- test.push_back(2);
-  test.push_back(3);
-   test.push_back(1);
-    test.push_back(1);
+
+   /* test.push_back(4);
+    test.push_back(5);
+    test.push_back(6);
+     test.push_back(7);
+     test.push_back(0);
+      test.push_back(1);
+     test.push_back(2);*/
+test.push_back(5);
+ test.push_back(1);
+     test.push_back(2);
+      test.push_back(3);
      test.push_back(4);
     string s,p;
     int n;
-    while(cin>>s)
+    while(cin>>n)
     {
         //cout<<s<<"\n";
-        cout<<ts->jump(test)<<"\n";
+        cout<<ts->search1(test,n)<<"\n";
        // cout<<ts->longestValidParentheses(s)<<"\n";
 //      vector<string> ans=  ts->letterCombinations(s);
 //      for(int i=0;i<ans.size();i++)
