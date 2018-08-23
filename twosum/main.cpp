@@ -1235,6 +1235,43 @@ public:
             return ans;
 
     }
+    int jump(vector<int>& nums) {
+        int len=nums.size();
+        vector<int> mark(len+2);
+        mark[0]=0;
+        for(int i=1;i<len;i++)
+        {
+            mark[i]=len+2;
+        }
+        //mark[len-1]=0;
+        int mark1=0;
+        int ans=0;
+        for(int i=0;i<len;i++)
+        {
+            if(nums[i]<nums[i-1]&&i>0)
+                continue;
+            for(int j=1;j<=nums[i];j++)
+            {
+
+                if((i+j)>(len-1))
+                    break;
+
+               if(mark[i]+1<mark[i+j])
+                mark[i+j]=mark[i]+1;
+
+                if((i+j)==len-1)
+                {
+                    mark1=1;
+                    ans=mark[len-1];
+                    break;
+                }
+
+            }
+            if(mark1==1)
+                break;
+        }
+        return ans;
+    }
 };
 void print(ListNode *l)
 {
@@ -1395,13 +1432,20 @@ int main()
 //cout<<ts->trap(test)<<"\n";
     }
 //ListNode *head=new ListNode(1);
-
+ vector<int> test;
+ test.clear();
+ test.push_back(2);
+  test.push_back(3);
+   test.push_back(1);
+    test.push_back(1);
+     test.push_back(4);
     string s,p;
     int n;
     while(cin>>s)
     {
         //cout<<s<<"\n";
-        cout<<ts->longestValidParentheses(s)<<"\n";
+        cout<<ts->jump(test)<<"\n";
+       // cout<<ts->longestValidParentheses(s)<<"\n";
 //      vector<string> ans=  ts->letterCombinations(s);
 //      for(int i=0;i<ans.size();i++)
 //      {
