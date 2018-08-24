@@ -1344,6 +1344,61 @@ public:
         }
         return ans;
     }
+    int strStr(string haystack, string needle) {
+        int len=haystack.length();
+        int len2=needle.length();
+        if(len2==0)
+            return 0;
+        if(len<len2)
+            return -1;
+        int ans=-1;
+        vector<int> next;
+        next.clear();
+        next.resize(len2+2);
+        int k=0;
+        for(int q=1;q<=len2;q++)
+        {
+            while(k>0&&needle[k]!=needle[q])
+                 k=next[k-1];
+            if(needle[k]==needle[q])
+                k=k+1;
+            next[q]=k;
+        }
+         int n,m;
+    n=len;
+    m=len2;
+   // makenext();
+    for(int i=0,q=0;i<n;i++)
+    {
+        while(q>0&&needle[q]!=haystack[i])
+            q=next[q-1];
+        if(needle[q]==haystack[i])
+            q=q+1;
+        if(q==m)
+            return i-m+1;
+        //q=next[q-1];
+    }
+    return -1;
+        /*for(int i=0;i<len-len2;i++)
+        {
+            int mark=0;
+            int t=i;
+            for(int j=0;j<len2;j++)
+            {
+                if(haystack[t]==needle[j])
+                    {t++;mark++;}
+                else
+                    break;
+            }
+            if(mark==len2)
+            {
+                ans=i;
+             break;
+             }
+        }
+        return ans;*/
+    }
+
 };
 void print(ListNode *l)
 {
@@ -1514,17 +1569,18 @@ int main()
      test.push_back(0);
       test.push_back(1);
      test.push_back(2);*/
-test.push_back(5);
- test.push_back(1);
-     test.push_back(2);
-      test.push_back(3);
-     test.push_back(4);
+//test.push_back(5);
+// test.push_back(1);
+//     test.push_back(2);
+//      test.push_back(3);
+//     test.push_back(4);
     string s,p;
     int n;
-    while(cin>>n)
+    while(cin>>s>>p)
     {
+        cout<<ts->strStr(s,p)<<"\n";
         //cout<<s<<"\n";
-        cout<<ts->search1(test,n)<<"\n";
+//        cout<<ts->search1(test,n)<<"\n";
        // cout<<ts->longestValidParentheses(s)<<"\n";
 //      vector<string> ans=  ts->letterCombinations(s);
 //      for(int i=0;i<ans.size();i++)

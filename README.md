@@ -84,6 +84,10 @@ study leetcode
 题意：移除一个数组中所有等于val的元素
 解决方法：用一个变量anslen记结果长度，遍历时，如果nums[i]不等于val，则把nums[anslen++]=nums[i]
 
+028 实现strStr()
+题意：实现 strStr() 函数。
+解决方法：KMP算法
+
 029 两数相除
 题意：给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
 	  返回被除数 dividend 除以除数 divisor 得到的商。
