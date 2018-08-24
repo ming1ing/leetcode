@@ -1398,7 +1398,58 @@ public:
         }
         return ans;*/
     }
+    void dfs5(vector<int>& candidates,vector<int>& mark,set<vector<int> > &ans,int target)
+    {
+        if(target==0)
+        {
+           // sort(mark.begin(),mark.end());
+           vector<int> temp;
+           temp.clear();
 
+            for(int i=0;i<mark.size();i++)
+            {
+               // cout<<mark[i]<<" ";
+                temp.push_back(mark[i]);
+            }
+            //cout<<"\n";
+            sort(temp.begin(),temp.end());
+            ans.insert(temp);
+            temp.clear();
+            return ;
+        }
+        else if(target<0)
+        {
+            return ;
+        }
+        else
+        {
+            for(int i=0;i<candidates.size();i++)
+            {
+                if((target-candidates[i])>=0)
+                {
+                    mark.push_back(candidates[i]);
+                    dfs5(candidates,mark,ans,target-candidates[i]);
+                    mark.pop_back();
+                }
+                else
+                    continue;
+            }
+        }
+    }
+    vector<vector<int> > combinationSum(vector<int>& candidates, int target) {
+            set<vector<int> > ans;
+            ans.clear();
+            vector<int> mark;
+            mark.clear();
+            vector<vector<int> > res;
+            res.clear();
+            dfs5(candidates,mark,ans,target);
+            for(set<vector<int> >::iterator it=ans.begin();it!=ans.end();it++)
+            {
+                res.push_back(*it);
+            }
+            return res;
+    }
 };
 void print(ListNode *l)
 {
@@ -1569,16 +1620,25 @@ int main()
      test.push_back(0);
       test.push_back(1);
      test.push_back(2);*/
-//test.push_back(5);
-// test.push_back(1);
-//     test.push_back(2);
-//      test.push_back(3);
-//     test.push_back(4);
+test.push_back(2);
+ test.push_back(3);
+ test.push_back(5);
+    // test.push_back(6);
+     // test.push_back(7);
+     //test.push_back(4);
     string s,p;
     int n;
-    while(cin>>s>>p)
+    while(cin>>n)
     {
-        cout<<ts->strStr(s,p)<<"\n";
+        vector<vector<int> > ans=ts->combinationSum(test,n);
+        cout<<"-----"<<ans.size()<<"\n";
+        for(int i=0;i<ans.size();i++)
+        {
+            for(int j=0;j<ans[i].size();j++)
+                cout<<ans[i][j]<<" ";
+            cout<<"\n";
+        }
+       // cout<<ts->strStr(s,p)<<"\n";
         //cout<<s<<"\n";
 //        cout<<ts->search1(test,n)<<"\n";
        // cout<<ts->longestValidParentheses(s)<<"\n";
