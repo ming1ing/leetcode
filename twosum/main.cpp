@@ -1450,6 +1450,47 @@ public:
             }
             return res;
     }
+    void nextPermutation(vector<int>& nums) {
+        int len=nums.size();
+        int id=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            cout<<nums[i]<<" ";
+        }
+        cout<<"\n";
+        for(int i=len-1;i>0;i--)
+        {
+            if(nums[i]>nums[i-1])
+            {
+                id=i;
+                break;
+            }
+        }
+        cout<<id<<"\n";
+        if(id==0)
+        {
+            std::reverse(nums.begin(),nums.end());
+
+           // return ;
+        }
+        else
+        {
+            for(int i=len-1;i>=id;i--)
+            {
+                if(nums[i]>nums[id-1])
+                {
+                    swap(nums[i],nums[id-1]);
+                    break;
+                }
+            }
+            sort(nums.begin()+id,nums.end());
+        }
+         for(int i=0;i<nums.size();i++)
+        {
+            cout<<nums[i]<<" ";
+        }
+        cout<<"\n";
+    }
 };
 void print(ListNode *l)
 {
@@ -1620,9 +1661,11 @@ int main()
      test.push_back(0);
       test.push_back(1);
      test.push_back(2);*/
+      test.push_back(1);
+       test.push_back(3);
 test.push_back(2);
- test.push_back(3);
- test.push_back(5);
+// test.push_back(2);
+
     // test.push_back(6);
      // test.push_back(7);
      //test.push_back(4);
@@ -1630,14 +1673,15 @@ test.push_back(2);
     int n;
     while(cin>>n)
     {
-        vector<vector<int> > ans=ts->combinationSum(test,n);
-        cout<<"-----"<<ans.size()<<"\n";
-        for(int i=0;i<ans.size();i++)
-        {
-            for(int j=0;j<ans[i].size();j++)
-                cout<<ans[i][j]<<" ";
-            cout<<"\n";
-        }
+        ts->nextPermutation(test);
+//        vector<vector<int> > ans=ts->combinationSum(test,n);
+//        cout<<"-----"<<ans.size()<<"\n";
+//        for(int i=0;i<ans.size();i++)
+//        {
+//            for(int j=0;j<ans[i].size();j++)
+//                cout<<ans[i][j]<<" ";
+//            cout<<"\n";
+//        }
        // cout<<ts->strStr(s,p)<<"\n";
         //cout<<s<<"\n";
 //        cout<<ts->search1(test,n)<<"\n";
