@@ -571,46 +571,7 @@ public:
         }
         return strans;
     }
-    vector<vector<int> > threeSum(vector<int>& nums) {
-        map<int,int> mark;
-        mark.clear();
-        for(int i=0;i<nums.size();i++)
-        {
-            mark[nums[i]]++;
-        }
-        for(int i=0;i<nums.size();i++)
-        {
-            for(int j=0;j<0;j++)
-            {
-                ;
-            }
-        }
-    }
-    /*vector<string> letterCombinations(string digits) {
-        string s[10];
-        s[0]="";
-        s[1]="";
-        s[2]="abc";
-        s[3]="def";
-        s[4]="ghi";
-        s[5]="jkl";
-        s[6]="mno";
-        s[7]="pqrs";
-        s[8]="tuv";
-        s[9]="wxyz";
-        vector<string> ans;
-        ans.clear();
-        int len=digits.length();
-        for(int i=0;i<len;i++)
-        {
-            string t="";
-            for(int j=0;j<s[i].length();j++)
-            {
-                int num=digits[i]-'0';
-                t+=s[num][j];
-            }
-        }
-    }*/
+
     bool isValid(string s) {
         if(s.length()%2==1)
             return false;
@@ -1491,6 +1452,53 @@ public:
         }
         cout<<"\n";
     }
+    void dfs6(vector<int>& candidates,int target,vector<int>& mark,set<vector<int> > & ans)
+    {
+        if(target==0)
+        {
+            vector<int> t;
+            t.clear();
+            for(int i=0;i<candidates.size();i++)
+            {
+                if(mark[i]==1)
+                t.push_back(candidates[i]);
+            }
+            sort(t.begin(),t.end());
+            ans.insert(t);
+            t.clear();
+            return ;
+        }
+        else if(target<0)
+        {
+            return ;
+        }
+        for(int i=0;i<candidates.size();i++)
+        {
+            if(mark[i]==0)
+            {
+                if(target-candidates[i]>=0)
+                {
+                    mark[i]=1;
+                    dfs6(candidates,target-candidates[i],mark,ans);
+                    mark[i]=0;
+                }
+            }
+        }
+    }
+    vector<vector<int> > combinationSum2(vector<int>& candidates, int target) {
+        int len=candidates.size();
+        vector<int> mark(len+1,0);
+        vector<vector<int> > res;
+        res.clear();
+        set<vector<int> > ans;
+        ans.clear();
+        dfs6(candidates,target,mark,ans);
+        for(set<vector<int> >::iterator it=ans.begin();it!=ans.end();it++)
+        {
+            res.push_back(*it);
+        }
+        return res;
+    }
 };
 void print(ListNode *l)
 {
@@ -1661,9 +1669,13 @@ int main()
      test.push_back(0);
       test.push_back(1);
      test.push_back(2);*/
-      test.push_back(1);
-       test.push_back(3);
-test.push_back(2);
+      test.push_back(10);
+       test.push_back(1);
+    test.push_back(2);
+    test.push_back(7);
+       test.push_back(6);
+    test.push_back(1);
+    test.push_back(5);
 // test.push_back(2);
 
     // test.push_back(6);
@@ -1673,7 +1685,14 @@ test.push_back(2);
     int n;
     while(cin>>n)
     {
-        ts->nextPermutation(test);
+        vector<vector<int> > ans=ts->combinationSum2(test,n);
+        for(int i=0;i<ans.size();i++)
+        {
+            for(int j=0;j<ans[i].size();j++)
+                cout<<ans[i][j]<<" ";
+            cout<<"\n";
+        }
+     //ts->nextPermutation(test);
 //        vector<vector<int> > ans=ts->combinationSum(test,n);
 //        cout<<"-----"<<ans.size()<<"\n";
 //        for(int i=0;i<ans.size();i++)
