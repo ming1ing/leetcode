@@ -1573,6 +1573,30 @@ public:
         cout<<lans<<" "<<rans<<" \n";
         return res;
     }
+    int firstMissingPositive(vector<int>& nums) {
+        int len=nums.size();
+       for(int i=0;i<len;i++)
+       {
+
+           if(nums[i]==(i+1))
+            continue;
+           else
+           {
+               int t=nums[i];
+               if(nums[i]>=1&&nums[i]<=len&&nums[t-1]!=nums[i])
+               {
+                   swap(a[i],a[t-1]);
+               }
+               else
+                continue;
+           }
+       }
+       for(int i=0;i<len;i++)
+       {
+           if(nums[i]!=i+1)
+            return i+1;
+       }
+    }
 };
 void print(ListNode *l)
 {
