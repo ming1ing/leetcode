@@ -1499,6 +1499,80 @@ public:
         }
         return res;
     }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int len=nums.size();
+        int l=0,r=len-1;
+        int lans=-1;
+        while(l<=r)
+        {
+            int mid=(l+r)/2;
+            if(nums[mid]==target)
+            {
+                if(mid==0)
+                {
+                    lans=0;
+                    break;
+                }
+                if(nums[mid-1]==target)
+                {
+                    r=mid-1;
+                    continue;
+                }
+                else
+                {
+                    lans=mid;
+                    break;
+                }
+            }
+            if(nums[mid]<target)
+            {
+                l=mid+1;
+            }
+            else if(nums[mid]>target)
+            {
+                r=mid-1;
+            }
+        }
+
+        l=0,r=len-1;
+        int rans=-1;
+        while(l<=r)
+        {
+            int mid=(l+r)/2;
+            if(nums[mid]==target)
+            {
+                if(mid==(len-1))
+                {
+                    rans=len-1;
+                    break;
+                }
+                if(nums[mid+1]==target)
+                {
+                    l=mid+1;
+                    continue;
+                }
+                else
+                {
+                    rans=mid;
+                    break;
+                }
+            }
+            if(nums[mid]<target)
+            {
+                l=mid+1;
+            }
+            else
+            {
+                r=mid-1;
+            }
+        }
+        vector<int> res;
+        res.clear();
+        res.push_back(lans);
+        res.push_back(rans);
+        cout<<lans<<" "<<rans<<" \n";
+        return res;
+    }
 };
 void print(ListNode *l)
 {
@@ -1669,13 +1743,13 @@ int main()
      test.push_back(0);
       test.push_back(1);
      test.push_back(2);*/
-      test.push_back(10);
-       test.push_back(1);
-    test.push_back(2);
+      test.push_back(5);
+       test.push_back(7);
     test.push_back(7);
-       test.push_back(6);
-    test.push_back(1);
-    test.push_back(5);
+    test.push_back(8);
+       test.push_back(8);
+    test.push_back(10);
+    //test.push_back(5);
 // test.push_back(2);
 
     // test.push_back(6);
@@ -1685,13 +1759,14 @@ int main()
     int n;
     while(cin>>n)
     {
-        vector<vector<int> > ans=ts->combinationSum2(test,n);
-        for(int i=0;i<ans.size();i++)
-        {
-            for(int j=0;j<ans[i].size();j++)
-                cout<<ans[i][j]<<" ";
-            cout<<"\n";
-        }
+        ts->searchRange(test,n);
+//        vector<vector<int> > ans=ts->combinationSum2(test,n);
+//        for(int i=0;i<ans.size();i++)
+//        {
+//            for(int j=0;j<ans[i].size();j++)
+//                cout<<ans[i][j]<<" ";
+//            cout<<"\n";
+//        }
      //ts->nextPermutation(test);
 //        vector<vector<int> > ans=ts->combinationSum(test,n);
 //        cout<<"-----"<<ans.size()<<"\n";
