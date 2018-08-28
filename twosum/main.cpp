@@ -1647,6 +1647,39 @@ public:
         cout<<ans;
         return ans;
     }
+     bool isValidSudoku(vector<vector<char>>& board) {
+        int hor[10][10];
+        int vet[10][10];
+        int sq[10][10];
+        memset(hor,0,sizeof(hor));
+        memset(vet,0,sizeof(vet));
+        memset(sq,0,sizeof(sq));
+        bool mark=true;
+        for(int i=0;i<board.size();i++)
+        {
+            for(int j=0;j<board[i].size();j++)
+            {
+                int t=0;
+                if(board[i][j]>='0'&&board[i][j]<='9')
+                {
+                    t=board[i][j]-'0';
+                    hor[i][t]++;
+                    if(hor[i][t]>1)
+                        mark=false;
+                    vet[j][t]++;
+                    if(vet[j][t]>1)
+                        mark=false;
+                    sq[i/3*3+j/3][t]++;
+                    if(sq[i/3*3+j/3][t]>1)
+                        mark=false;
+                        if(mark==false)
+                            return false;
+                }
+
+            }
+        }
+        return mark;
+    }
 };
 void print(ListNode *l)
 {
