@@ -1574,28 +1574,78 @@ public:
         return res;
     }
     int firstMissingPositive(vector<int>& nums) {
-        int len=nums.size();
-       for(int i=0;i<len;i++)
+  int len=nums.size();
+       for(int i=0;i<len;)
        {
 
            if(nums[i]==(i+1))
-            continue;
+            i++;
            else
            {
                int t=nums[i];
                if(nums[i]>=1&&nums[i]<=len&&nums[t-1]!=nums[i])
                {
-                   swap(a[i],a[t-1]);
+                   swap(nums[i],nums[t-1]);
                }
                else
-                continue;
+                i++;
            }
+       }
+        for(int i=0;i<len;i++)
+       {
+           cout<<nums[i]<<" ";
        }
        for(int i=0;i<len;i++)
        {
            if(nums[i]!=i+1)
             return i+1;
        }
+        return len+1;
+    }
+    string multiply(string num1, string num2) {
+        int len=num1.size();
+        int len2=num2.size();
+        int a[210];
+        memset(a,0,sizeof(a));
+        std::reverse(num1.begin(),num1.end());
+        std::reverse(num2.begin(),num2.end());
+        for(int i=0;i<len;i++)
+        {
+            for(int j=0;j<len2;j++)
+            {
+                a[i+j]=a[i+j]+(num1[i]-'0')*(num2[j]-'0');
+            }
+        }
+        for(int i=0;i<len+len2;i++)
+        {
+            cout<<a[i]<<" ";
+        }
+        cout<<"\n";
+        int mark=0;
+        for(int i=0;i<len+len2;i++)
+        {
+            a[i]=a[i]+mark;
+            mark=a[i]/10;
+            a[i]%=10;
+        }
+        for(int i=0;i<len+len2;i++)
+        {
+            cout<<a[i]<<" ";
+        }
+        cout<<"\n";
+        string ans="";
+        int i=len+len2;
+        while(a[i]==0&&i!=0)
+        {
+            i--;
+        }
+        for(;i>=0;i--)
+        {
+
+            ans+=(a[i]+'0');
+        }
+        cout<<ans;
+        return ans;
     }
 };
 void print(ListNode *l)
@@ -1767,12 +1817,12 @@ int main()
      test.push_back(0);
       test.push_back(1);
      test.push_back(2);*/
-      test.push_back(5);
-       test.push_back(7);
-    test.push_back(7);
-    test.push_back(8);
-       test.push_back(8);
-    test.push_back(10);
+//      test.push_back(5);
+//       test.push_back(7);
+//    test.push_back(7);
+//    test.push_back(8);
+//       test.push_back(8);
+//    test.push_back(10);
     //test.push_back(5);
 // test.push_back(2);
 
@@ -1781,9 +1831,10 @@ int main()
      //test.push_back(4);
     string s,p;
     int n;
-    while(cin>>n)
+    while(cin>>s>>p)
     {
-        ts->searchRange(test,n);
+        ts->multiply(s,p);
+        //ts->searchRange(test,n);
 //        vector<vector<int> > ans=ts->combinationSum2(test,n);
 //        for(int i=0;i<ans.size();i++)
 //        {
