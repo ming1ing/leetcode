@@ -21,6 +21,7 @@ void print(ListNode *l)
         cout<<l->val<<" ";
         l=l->next;
     }
+    cout<<"\n";
 }
 class Solution
 {
@@ -1030,19 +1031,17 @@ public:
         }
         return ans;
     }
-
-    ListNode* reverseKGroup(ListNode* head, int k)
+    ListNode* reverseList(ListNode* head,ListNode *end1)
     {
-        if(k==1)
-            return head;
-        ListNode *l1=head;
-        if(l1==NULL)
-            return NULL;
-        ListNode *l2=l1->next;
-        if(l2==NULL)
-            return head;
 
-        while(l2!=NULL)
+        ListNode *l1=head;
+        if(l1==end1)
+            return end1;
+        ListNode *l2=l1->next;
+        //if(l2==end1)
+         //   return head;
+
+        while(l2!=end1)
         {
             //ListNode *l3=l2->next;
             l1->next=l2->next;
@@ -1050,6 +1049,49 @@ public:
             head=l2;
             l2=l1->next;
         }
+        return head;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k)
+    {
+        if(k==1)
+            return head;
+        int cnt=0;
+        ListNode *tail=head;
+        ListNode *thead=head;
+        ListNode *t=NULL;
+        int mark=0;
+        for(; tail!=NULL; tail=tail->next)
+        {
+            cnt++;
+            if(cnt==k)
+            {
+                if(mark==0)
+                {
+                    cout<<thead->val<<" "<<tail->val<<"\n";
+                    head=reverseList(thead,tail->next);
+                    t=thead;
+                    mark=1;
+                    print(head);
+                }
+                else
+                {
+                    cout<<thead->val<<" "<<tail->val<<"\n";
+                    cout<<"t"<<t->val<<" "<<t->next->val<<"\n";
+                    t->next=reverseList(thead,tail->next);
+                    t=thead;
+                    print(t);
+                }
+                cnt=1;
+                thead=thead->next;
+
+                tail=thead;
+                if(tail==NULL)
+                    break;
+            }
+
+
+        }
+
         return head;
     }
 
@@ -1820,8 +1862,9 @@ public:
         ListNode *ans=new ListNode(0);
         ListNode *res=ans;
         int mark=0;
-        while(1){
-        int len=lists.size();
+        while(1)
+        {
+            int len=lists.size();
 
             ListNode *temp=NULL;
             int t=10000000000;
@@ -2038,35 +2081,45 @@ int main()
     // test.push_back(6);
     // test.push_back(7);
     //test.push_back(4);
-    vector<ListNode*> lists;
-    lists.clear();
+//    vector<ListNode*> lists;
+//    lists.clear();
+//    ListNode *l=new ListNode(1);
+//    lists.push_back(l);
+//    l->next=new ListNode(4);
+//    l=l->next;
+//    l->next=new ListNode(5);
+//    print(lists[0]);
+//    cout<<"\n";
+//    ListNode *l2=new ListNode(1);
+//    lists.push_back(l2);
+//    l2->next=new ListNode(3);
+//    l2=l2->next;
+//    l2->next=new ListNode(4);
+//    print(lists[1]);
+//    cout<<"\n";
+//    ListNode *l3=new ListNode(2);
+//    lists.push_back(l3);
+//    l3->next=new ListNode(6);
+//    l3=l3->next;
+//    l3->next=new ListNode(7);
+//    print(lists[2]);
+//    cout<<"\n";
+//    print(ts->mergeKLists(lists));
     ListNode *l=new ListNode(1);
-    lists.push_back(l);
-    l->next=new ListNode(4);
-    l=l->next;
-    l->next=new ListNode(5);
-    print(lists[0]);
-    cout<<"\n";
-    ListNode *l2=new ListNode(1);
-    lists.push_back(l2);
-    l2->next=new ListNode(3);
-    l2=l2->next;
-    l2->next=new ListNode(4);
-    print(lists[1]);
-    cout<<"\n";
-    ListNode *l3=new ListNode(2);
-    lists.push_back(l3);
-    l3->next=new ListNode(6);
-    l3=l3->next;
-    l3->next=new ListNode(7);
-    print(lists[2]);
-    cout<<"\n";
-    print(ts->mergeKLists(lists));
+    ListNode *st=l;
+    for(int i=2; i<7; i++)
+    {
+        l->next=new ListNode(i);
+        l=l->next;
+    }
+    print(st);
     string s,p;
     int n;
-    while(cin>>s>>p)
+    while(cin>>n)
     {
-        ts->multiply(s,p);
+        print( ts->reverseKGroup(st,n));
+        //print(ts->reverseList(st,st->next->next));
+//        ts->multiply(s,p);
         //ts->searchRange(test,n);
 //        vector<vector<int> > ans=ts->combinationSum2(test,n);
 //        for(int i=0;i<ans.size();i++)
