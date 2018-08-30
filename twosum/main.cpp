@@ -7,6 +7,8 @@
 #include<stack>
 #include<algorithm>
 #include<set>
+#include<cstdio>
+#include<cstdlib>
 using namespace std;
 struct ListNode
 {
@@ -1039,7 +1041,7 @@ public:
             return end1;
         ListNode *l2=l1->next;
         //if(l2==end1)
-         //   return head;
+        //   return head;
 
         while(l2!=end1)
         {
@@ -1857,54 +1859,234 @@ public:
         }
         return mark;
     }
-    ListNode* mergeKLists(vector<ListNode*>& lists)
+    void dfs7(vector<vector<char> >& board,int id)
     {
-        ListNode *ans=new ListNode(0);
-        ListNode *res=ans;
-        int mark=0;
-        while(1)
+        int len=board.size();
+        if(id>=81)
         {
-            int len=lists.size();
-
-            ListNode *temp=NULL;
-            int t=10000000000;
-            int id=-1;
             for(int i=0; i<len; i++)
             {
-                if(lists[i]==NULL)
+                for(int j=0; j<board[i].size(); j++)
+                {
+                    cout<<board[i][j]<<" ";
+                }
+                cout<<"\n";
+            }
+        }
+        int h=id/9,v=id%9;
+        cout<<"h:"<<h<<"v:"<<v<<"\n";
+        for(int i=h; i<9; i++)
+        {
+            for(int j=h; j<9; j++)
+            {
+                if(board[i][j]>='0'&&board[i][j]<='9')
+                {
                     continue;
+                }
                 else
                 {
-                    if(lists[i]->val<t)
+                    for(int k=1;k<10;k++)
                     {
-                        t=lists[i]->val;
-                        id=i;
+                        board[i][j]='0'+k;
+                        if(isValidSudoku(board)==true)
+                        {
+                            dfs7(board,i*9+j+1);
+                            board[i][j]='.';
+                        }
+                        else
+                        {
+                            return ;
+                        }
                     }
                 }
             }
-            if(id==-1)
+        }
+    }
+    void solveSudoku(vector<vector<char> >& board)
+    {
+
+        int len=board.size();
+        int mark=0;
+        for(int i=0; i<len; i++)
+        {
+            for(int j=0; j<(int)board[i].size(); j++)
             {
-                break;
+                if(board[i][j]=='.')
+                {
+                    cout<<"i:"<<i<<"j:"<<j<<"\n";
+                    dfs7(board,i*9+j);
+                    mark=1;
+                    break;
+                }
+                else
+                {
+                    int t=board[i][j]-'0';
+
+                }
             }
-            //cout<<lists[id]->val<<" ";
-
-
-            if(mark==0)
+            if(mark==1)
+                break;
+        }
+        for(int i=0; i<len; i++)
+        {
+            for(int j=0; j<board[i].size(); j++)
             {
-                ans->next=new ListNode(lists[id]->val);
-                res=ans;
-                mark=1;
+                cout<<board[i][j]<<" ";
+            }
+            cout<<"\n";
+        }
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists)
+    {
+        int len=lists.size();
+        int k=(len-1)/2;
+        for(int i=0; i<k; i++)
+        {
+            lists[i]=mergeTwoLists(lists[i],lists[i+k]);
+        }
+//        ListNode *ans=new ListNode(0);
+//        ListNode *res=ans;
+//        int mark=0;
+//        while(1)
+//        {
+//            int len=lists.size();
+//
+//            ListNode *temp=NULL;
+//            int t=10000000000;
+//            int id=-1;
+//            for(int i=0; i<len; i++)
+//            {
+//                if(lists[i]==NULL)
+//                    continue;
+//                else
+//                {
+//                    if(lists[i]->val<t)
+//                    {
+//                        t=lists[i]->val;
+//                        id=i;
+//                    }
+//                }
+//            }
+//            if(id==-1)
+//            {
+//                break;
+//            }
+//            //cout<<lists[id]->val<<" ";
+//
+//
+//            if(mark==0)
+//            {
+//                ans->next=new ListNode(lists[id]->val);
+//                res=ans;
+//                mark=1;
+//            }
+//            else
+//            {
+//                ans->next=new ListNode(lists[id]->val);
+//            }
+//            ans=ans->next;
+//            lists[id]=lists[id]->next;
+//            print(res);
+//            cout<<"\n";
+//        }
+//        return res->next;
+    }
+     vector<vector<int>> threeSum(vector<int>& nums) {
+        int len=nums.size();
+        vector<int> temp;
+        temp.clear();
+        map<int,int> mp;
+        vector<vector<int>> ans;
+        set<vector<int>> res;
+        res.clear();
+        ans.clear();
+        mp.clear();
+        if(len<3)
+            return ans;
+        int time=0;
+        for(int i=0;i<len;i++)
+        {
+            if(nums[i]!=0&&i<len)
+            {
+                sort(nums.begin(),nums.end());
+                break;
             }
             else
             {
-                ans->next=new ListNode(lists[id]->val);
+                time++;
             }
-            ans=ans->next;
-            lists[id]=lists[id]->next;
-            print(res);
-            cout<<"\n";
         }
-        return res->next;
+        if(time==len)
+        {
+            temp.push_back(0);
+            temp.push_back(0);
+            temp.push_back(0);
+            ans.push_back(temp);
+            return ans;
+        }
+        if(nums[0]==0&&nums[len-1]==0)
+        {
+            temp.push_back(0);
+            temp.push_back(0);
+            temp.push_back(0);
+            ans.push_back(temp);
+            return ans;
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(mp.find(nums[i])==mp.end())
+            {
+                mp.insert(map<int,int>::value_type(nums[i],1));
+            }
+            else
+            {
+                mp[nums[i]]++;
+            }
+        }
+        int t=0;
+        for(int i=0;i<len;i++)
+        {
+            if(nums[i]>0)
+                break;
+            temp.clear();
+            t+=nums[i];
+            temp.push_back(nums[i]);
+            mp[nums[i]]--;
+            for(int j=i+1;j<len;j++)
+            {
+                if(nums[j]==nums[j-1]&&j>i+1)
+                {
+                    continue;
+                }
+                mp[nums[j]]--;
+                t+=nums[j];
+                temp.push_back(nums[j]);
+                if(mp.find(-t)!=mp.end())
+                {
+                    if(mp[-t]>0)
+                    {
+                        temp.push_back(-t);
+                        std::sort(temp.begin(),temp.end());
+                        res.insert(temp);
+                        temp.clear();
+                        temp.push_back(nums[i]);
+                        temp.push_back(nums[j]);
+                    }
+                } else{
+                }
+                mp[nums[j]]++;
+                t-=nums[j];
+                temp.pop_back();
+            }
+            t-=nums[i];
+            temp.pop_back();
+            mp[nums[i]]++;
+        }
+        for(auto it=res.begin();it!=res.end();it++)
+        {
+            ans.push_back(*it);
+        }
+        return ans;
     }
 };
 
@@ -2113,11 +2295,30 @@ int main()
         l=l->next;
     }
     print(st);
+    vector<vector<char> > board;
+    board.clear();
     string s,p;
     int n;
-    while(cin>>n)
+    freopen("input.txt","r",stdin);
+    int time=0;
+    vector<char> t;
+    while(cin>>s)
     {
-        print( ts->reverseKGroup(st,n));
+        //cin>>s;
+        t.clear();
+        for(int i=0; i<s.length(); i++)
+        {
+            t.push_back(s[i]);
+        }
+        board.push_back(t);
+        cout<<s<<"\n";
+        for(int i=0;i<board[time].size();i++)
+        {
+            cout<<board[time][i]<<" ";
+        }
+        cout<<"\n";
+        time++;
+        // print( ts->reverseKGroup(st,n));
         //print(ts->reverseList(st,st->next->next));
 //        ts->multiply(s,p);
         //ts->searchRange(test,n);
@@ -2206,6 +2407,7 @@ int main()
 //cout<<ts->myPow(2.10,3)<<"\n";
 //cout<<ts->myPow(2.00,-2)<<"\n";
     }
+    ts->solveSudoku(board);
     return 0;
 }
 //9223372036854775808
