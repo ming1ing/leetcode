@@ -1991,13 +1991,13 @@ public:
 //        }
 //        return res->next;
     }
-     vector<vector<int>> threeSum(vector<int>& nums) {
+     vector<vector<int> > threeSum(vector<int>& nums) {
         int len=nums.size();
         vector<int> temp;
         temp.clear();
         map<int,int> mp;
-        vector<vector<int>> ans;
-        set<vector<int>> res;
+        vector<vector<int> > ans;
+        set<vector<int> > res;
         res.clear();
         ans.clear();
         mp.clear();
@@ -2082,9 +2082,41 @@ public:
             temp.pop_back();
             mp[nums[i]]++;
         }
-        for(auto it=res.begin();it!=res.end();it++)
+        for(set<vector<int> >::iterator it=res.begin();it!=res.end();it++)
         {
             ans.push_back(*it);
+        }
+        return ans;
+    }
+        int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int len=nums.size();
+        int ans=1000000000;
+        int dis=1000000000;
+        for(int i=0;i<len-2;i++)
+        {
+            for(int j=i+1;j<len-1;j++)
+            {
+                int te=(target-nums[i]-nums[j]);
+                int id=lower_bound(nums.begin()+j+1,nums.end(),te)-(nums.begin());
+                if(id>len-1)
+                {
+                    id=len-1;
+                }
+                if(id-1>j)
+                {
+                    if(abs(te-nums[id])>abs(te-nums[id-1]))
+                    {
+                        id--;
+                    }
+                }
+                int tdis=abs(te-nums[id]);
+                if(tdis<dis)
+                {
+                    dis=tdis;
+                    ans=nums[i]+nums[j]+nums[id];
+                }
+            }
         }
         return ans;
     }
