@@ -1859,81 +1859,75 @@ public:
         }
         return mark;
     }
-    void dfs7(vector<vector<char> >& board,int id)
-    {
-        int len=board.size();
-        if(id>=81)
+
+    void dfs7(vector<vector<char> >& board,vector<vector<char > >& res,int id){
+        if(id>80)
         {
-            for(int i=0; i<len; i++)
+            int len=board.size();
+            for(int i=0;i<len;i++)
             {
-                for(int j=0; j<board[i].size(); j++)
-                {
-                    cout<<board[i][j]<<" ";
-                }
-                cout<<"\n";
+                res.push_back(board[i]);
             }
+            return ;
         }
-        int h=id/9,v=id%9;
-        cout<<"h:"<<h<<"v:"<<v<<"\n";
-        for(int i=h; i<9; i++)
+       if(id<81)
         {
-            for(int j=h; j<9; j++)
+            int h=id/9,v=id%9;
+            if(board[h][v]!='.')
             {
-                if(board[i][j]>='0'&&board[i][j]<='9')
+                id++;
+                dfs7(board,res,id);
+                id--;
+            }
+            else if(board[h][v]=='.')
+            {
+                for(int i=1;i<10;i++)
                 {
-                    continue;
-                }
-                else
-                {
-                    for(int k=1;k<10;k++)
-                    {
-                        board[i][j]='0'+k;
-                        if(isValidSudoku(board)==true)
-                        {
-                            dfs7(board,i*9+j+1);
-                            board[i][j]='.';
-                        }
-                        else
-                        {
-                            return ;
-                        }
+                    board[h][v]='0'+i;
+                    if(isValidSudoku(board)== true){
+                        id++;
+                        dfs7(board,res,id);
+                        board[h][v]='.';
+                        id--;
                     }
+                    else
+                    {
+                        board[h][v]='.';
+
+                    }
+
                 }
             }
         }
     }
-    void solveSudoku(vector<vector<char> >& board)
-    {
-
-        int len=board.size();
+    void solveSudoku(vector<vector<char> >& board) {
+            int len=board.size();
+        vector<vector<char> > res;
+        res.clear();
         int mark=0;
-        for(int i=0; i<len; i++)
+        for(int i=0;i<len;i++)
         {
-            for(int j=0; j<(int)board[i].size(); j++)
+            for(int j=0;j<board[i].size();j++)
             {
                 if(board[i][j]=='.')
                 {
-                    cout<<"i:"<<i<<"j:"<<j<<"\n";
-                    dfs7(board,i*9+j);
+                    dfs7(board,res,i*9+j);
                     mark=1;
                     break;
-                }
-                else
-                {
-                    int t=board[i][j]-'0';
-
                 }
             }
             if(mark==1)
                 break;
         }
-        for(int i=0; i<len; i++)
+       // cout<<"---------------"<<"\n";
+        for(int i=0;i<len;i++)
         {
-            for(int j=0; j<board[i].size(); j++)
+            for(int j=0;j<board[i].size();j++)
             {
-                cout<<board[i][j]<<" ";
+                board[i][j]=res[i][j];
+                //cout<<res[i][j]<<" ";
             }
-            cout<<"\n";
+           // cout<<"\n";
         }
     }
     ListNode* mergeKLists(vector<ListNode*>& lists)
@@ -2119,6 +2113,54 @@ public:
             }
         }
         return ans;
+    }
+    vector<vector<int> > fourSum(vector<int>& nums, int target) {
+        int len=nums.size();
+        sort(nums.begin(),nums.end());
+//        for (int i = 0; i <len ; ++i) {
+//            cout<<nums[i]<<" ";
+//        }
+//        cout<<"\n";
+        set<vector<int> > ans;
+        vector<vector<int> > res;
+        ans.clear();
+        res.clear();
+
+        for(int i=0;i<len-3;i++)
+        {
+            for(int j=i+1;j<len-2;j++)
+            {
+                int l=j+1,r=len-1;
+                int t=target-nums[i]-nums[j];
+                while(l<r)
+                {
+                    if(nums[l]+nums[r]==t)
+                    {
+                        vector<int> temp;
+                        temp.push_back(nums[i]);
+                        temp.push_back(nums[j]);
+                        temp.push_back(nums[l]);
+                        temp.push_back(nums[r]);
+                        ans.insert(temp);
+                        temp.clear();
+                        l++;r--;
+                    }
+                    else if(nums[l]+nums[r]<t)
+                    {
+                        l++;
+                    }
+                    else
+                    {
+                        r--;
+                    }
+                }
+            }
+        }
+        for(set<vector<int> >::iterator it=ans.begin();it!=ans.end();it++)
+        {
+            res.push_back(*it);
+        }
+        return res;
     }
 };
 
@@ -2440,6 +2482,14 @@ int main()
 //cout<<ts->myPow(2.00,-2)<<"\n";
     }
     ts->solveSudoku(board);
+    for(int i=0;i<board.size();i++)
+    {
+        for(int j=0;j<board[i].size();j++)
+        {
+            cout<<board[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
     return 0;
 }
 //9223372036854775808
